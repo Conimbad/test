@@ -1,7 +1,9 @@
 <?php
 include '../modelo/Examen.php';
 
+
 $examen = new Examen();
+
 
 if ($_POST['funcion'] == 'crear') {
 	$nombre = $_POST['nombre'];
@@ -22,6 +24,8 @@ if ($_POST['funcion'] == 'crearExamen') {
 	echo $jsonstring;
 
 }
+
+//Guardando examenes dependiendo número de preguntas
 if ($_POST['funcion'] == "guardar1") {
 	$pregunta1 = $_POST['pregunta1'];
 	$res11 = $_POST['res11'];
@@ -31,7 +35,27 @@ if ($_POST['funcion'] == "guardar1") {
 	$id_ex = $_POST['id_ex'];
 
 	$examen->GuardarExamen1($pregunta1,$res11,$res12,$res13,$correcta1,$id_ex);
-}
+
+} /*elseif ($_POST['funcion'] == 'guardar1') {
+	$id_ex = $_POST['id_ex'];
+	$plantilla->traerDatos($id_ex);
+	$json = array();
+	foreach($plantilla->objetos as $objeto) {
+		$json[] = array (
+			'id_pregunta'=>$objeto->id_pregunta,
+			'pregunta'=>$objeto->pregunta,
+			'res_1'=>$objeto->res_1,
+			'res_2'=>$objeto->res_2,
+			'res_3'=>$objeto->res_3,
+			'res_correcta'=>$objeto->res_correcta,
+			'id_examen'=>$objeto->id_examen1,
+			'nombre'=>$objeto->nombre,
+			'cant_preg'=>$objeto->cant_preg
+		);
+	}
+	$jsonstring = json_encode($json);
+	echo $jsonstring;
+}*/
 if ($_POST['funcion'] == "guardar2") {
 	//Pregunta 1
 	$pregunta1 = $_POST['pregunta1'];
@@ -79,6 +103,7 @@ if ($_POST['funcion'] == "guardar3") {
 		$pregunta2,$res21,$res22,$res23,$correcta2,
 		$pregunta3,$res31,$res32,$res33,$correcta3,$id_ex
 	);
+
 }
 if ($_POST['funcion'] == "guardar4") {
 	//Pregunta 1

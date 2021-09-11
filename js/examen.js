@@ -95,7 +95,32 @@ $(document).ready(function () {
 					`;
       });
       $("#preguntas").html(preguntas);
+      //Generar plantilla
 
+      function generarPlantilla() {
+        let idExamen = $("#id_ex").val();
+        funcion = "generarPlantilla";
+        $.post(
+          "../controlador/MostrarExamenController.php",
+          { funcion, idExamen },
+          (response) => {
+            if (response) {
+              let link = response;
+              Swal.fire({
+                title: "<strong>Examen creado correctamente!</strong>",
+                icon: "success",
+                html:
+                  "Puede acceder al examen en este link: <br>" +
+                  `<b>${link}</b> <br>`,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText: '<i class="fa fa-thumbs-up"></i> OK!',
+                confirmButtonAriaLabel: "Thumbs up, great!",
+              });
+            }
+          }
+        );
+      }
       //Envío de preguntas y respuestas:
       $("#form-preguntas").submit((e) => {
         let id_ex = $("#id_ex").val();
@@ -130,6 +155,10 @@ $(document).ready(function () {
               id_ex,
             },
             (response) => {
+              if (response == "guardado") {
+                exGuardad();
+                generarPlantilla();
+              }
               console.log(response);
             }
           );
@@ -185,6 +214,8 @@ $(document).ready(function () {
             },
             (response) => {
               console.log(response);
+              exGuardad();
+              generarPlantilla();
             }
           );
         }
@@ -258,7 +289,8 @@ $(document).ready(function () {
               id_ex,
             },
             (response) => {
-              console.log(response);
+              exGuardad();
+              generarPlantilla();
             }
           );
         }
@@ -352,7 +384,8 @@ $(document).ready(function () {
               id_ex,
             },
             (response) => {
-              console.log(response);
+              exGuardad();
+              generarPlantilla();
             }
           );
         }
@@ -466,7 +499,8 @@ $(document).ready(function () {
               id_ex,
             },
             (response) => {
-              console.log(response);
+              exGuardad();
+              generarPlantilla();
             }
           );
         }
@@ -475,28 +509,12 @@ $(document).ready(function () {
     });
   }
   //Alerta de guardado
-  exGuardad();
   function exGuardad() {
     funcion = "pedirLink";
     $.post(
       "../controlador/MostrarExamenController.php",
       { funcion },
-      (response) => {
-        if (response) {
-          let link = response;
-          Swal.fire({
-            title: "<strong>Examen creado correctamente!</strong>",
-            icon: "success",
-            html:
-              "Puede acceder al examen en este link: <br>" +
-              `<b>${link}</b> <br>`,
-            showCloseButton: true,
-            focusConfirm: false,
-            confirmButtonText: '<i class="fa fa-thumbs-up"></i> OK!',
-            confirmButtonAriaLabel: "Thumbs up, great!",
-          });
-        }
-      }
+      (response) => {}
     );
   }
 
